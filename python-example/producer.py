@@ -65,9 +65,9 @@ def delivery_report(err, msg):
 def main(argv):
     topic = 'PEINT.KafkaClientPythonExample.v1'
     #broker_url
-    bootstrap_servers = os.environ['BOOTSTRAP_SERVER']
+    bootstrap_servers = 'localhost:9092'
     #schema_registry_url
-    schema_registry =  os.environ['KAFKA_SCHEMA_REGISTRY']
+    schema_registry =  'http://localhost:8081'
     #cacert_path = '/var/task/cacert/graingerchain.pem'
 
     schema_str = """
@@ -102,12 +102,9 @@ def main(argv):
     json_serializer = JSONSerializer(schema_str, schema_registry_client, record_to_dict)
 
     producer_conf = {'bootstrap.servers': bootstrap_servers
-        ,'security.protocol': 'SSL'
         ,'key.serializer': StringSerializer('utf_8')
         ,'value.serializer': json_serializer
-        ,'ssl.certificate.location': os.environ['MSK_CERTIFICATE_PATH'] #path to certificate pem file
-        ,'ssl.key.location': os.environ['MSK_PRIVATEKEY_PATH'] #path to pivate key pem file
-                     }
+     }
 
     producer = SerializingProducer(producer_conf)
 

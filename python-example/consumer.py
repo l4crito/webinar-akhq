@@ -38,12 +38,12 @@ def shutdown():
 def main(argv):
     topic = 'PEINT.KafkaClientPythonExample.v1'
     #broker_url
-    bootstrap_servers = os.environ['BOOTSTRAP_SERVER']
-    cacert_path = '/var/task/cacert/graingerchain.pem'
+    bootstrap_servers = 'localhost:9092'
+    #cacert_path = '/var/task/cacert/graingerchain.pem'
 
     consumer_conf = {'bootstrap.servers': bootstrap_servers
         ,'security.protocol': 'SSL'
-        ,'ssl.ca.location': cacert_path
+        #,'ssl.ca.location': cacert_path
         ,'ssl.certificate.location': os.environ['MSK_CERTIFICATE_PATH'] #path to certificate pem file
         ,'ssl.key.location': os.environ['MSK_PRIVATEKEY_PATH'] #path to pivate key pem file
         ,'group.id': "foo"
