@@ -71,3 +71,6 @@ services:
               schema-registry:
                 url: "http://schema-registry:8081"
                 type: "confluent"
+            cluster kafka2:
+              properties:
+                bootstrap.servers: kafka:29092

@@ -4,7 +4,7 @@ from uuid import uuid4
 from six.moves import input
 
 from confluent_kafka import avro
-import os, sys, getopt
+from random import randrange
 
 # Parse Schema used for serializing User class
 record_schema = avro.loads("""
@@ -73,13 +73,14 @@ def produce(topic, conf):
     producer = AvroProducer(conf, default_value_schema=record_schema)
 
     print("Producing user records to topic {}. ^c to exit.".format(topic))
+    colors =["Amarillo","Azul","Rojo","Verde","Negro","Morado","Cafe","Celeste"]
     while True:
         # Instantiate new User, populate fields, produce record, execute callbacks.
         record = User()
         try:
-            record.name = input("Enter name: ")
-            record.favorite_number = int(input("Enter favorite number: "))
-            record.favorite_color = input("Enter favorite color: ")
+            record.name = input("Ingrese un nombre: ")
+            record.favorite_number = randrange(10)
+            record.favorite_color = colors[randrange(len(colors))]
 
             # The message passed to the delivery callback will already be serialized.
             # To aid in debugging we provide the original object to the delivery callback.
@@ -157,7 +158,7 @@ if __name__ == '__main__':
                         default='localhost:9092', help="Bootstrap broker(s) (host[:port])")
     parser.add_argument('-s', dest="schema_registry",
                         default='http://localhost:8081', help="Schema Registry (http(s)://host[:port]")
-    parser.add_argument('-t', dest="topic", default="peint.python-example-avro.user.v1",
+    parser.add_argument('-t', dest="topic", default="topic.example",
                         help="Topic name")
     parser.add_argument('mode', choices=['produce', 'consume'],
                         help="Execution mode (produce | consume)")
