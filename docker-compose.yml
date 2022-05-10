@@ -63,7 +63,22 @@ services:
     environment:
       TZ: America/Guayaquil
       AKHQ_CONFIGURATION: |
+
+        micronaut:
+          security:
+            enabled: true   
         akhq:
+          security:
+            default-group: reader
+            basic-auth:
+              - username: admin
+                password: 1bfbf500050df6b1844a95cdeaf7d4b97c0baffff16aad258b44ab1d66b6efe8
+                groups:
+                - admin
+              - username: reader
+                password: 1bfbf500050df6b1844a95cdeaf7d4b97c0baffff16aad258b44ab1d66b6efe8
+                groups:
+                - reader
           connections:
             cluster kafka:
               properties:
